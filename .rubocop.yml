@@ -9,3 +9,13 @@ AllCops:
 
 Layout/LineLength:
   Max: 80
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

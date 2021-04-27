@@ -1,0 +1,34 @@
+{
+    "status": "complete",
+    "redirectUrl": "https://someurl.bogus",
+    "providerParameters": {
+        "auth": {}
+    },
+    "id": "e39889cd-4cab-4467-b416-941499a2a02f",
+    "providerInfo": {
+        "seBankID": {
+            "autoStartToken": "65398efc-f830-4715-acb7-46a2ffb9772c",
+            "completionData": {
+                "user": {
+                    "surname": "Dout",
+                    "personalNumber": "196309125422",
+                    "name": "Stan Dout",
+                    "givenName": "Stan"
+                },
+                "device": {
+                    "ipAddress": "62.182.220.33"
+                },
+                "signature": "PD94bWwgdmVyc2lvbj0iMS4wPC9TaWduYXR1cmU+",
+                "ocspResponse": "MIIHfgoBAKCCB3cwggdzBgkr",
+                "cert": {
+                    "notBefore": "1619128800000",
+                    "notAfter": "1682287199000"
+                }
+            },
+            "processStatus": "complete",
+            "processStatusInfo": null
+        }
+    },
+    "method": "auth",
+    "provider": "seBankID"
+}
