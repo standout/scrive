@@ -33,11 +33,16 @@ module Scrive
       parse_response(response)
     end
 
-    def verify_transaction?(transaction_id:, ssn:)
-      response = get_transacation(transaction_id: transaction_id)
-      raise TransactionNotCompletedError if response['status'] != 'complete'
+    def get_transaction(transaction_id:)
+      url = URI("#{base_uri}/transaction/#{transaction_id}")
 
-      response.dig(*ssn_path) == ssn.to_s
+      request = Net::HTTP::Get.new(url)
+      request['Authorization'] = authorization_header
+
+      response = parse_response(http(url).request(request))
+      return response if response['status'].casecmp?('complete')
+
+      raise TransactionNotCompletedError, response
     end
 
     private
@@ -52,16 +57,6 @@ module Scrive
         http.set_debug_output $stderr if debug
         http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       end
-    end
-
-    def get_transacation(transaction_id:)
-      url = URI("#{base_uri}/transaction/#{transaction_id}")
-
-      request = Net::HTTP::Get.new(url)
-      request['Authorization'] = authorization_header
-
-      response = http(url).request(request)
-      parse_response(response)
     end
 
     def build_request_body(redirect_url)

@@ -64,9 +64,9 @@ RSpec.describe Scrive::EID do
     end
   end
 
-  describe '#verify_transaction?' do
-    subject(:verify_transaction) do
-      service.verify_transaction?(transaction_id: 1234, ssn: ssn)
+  describe '#get_transaction?' do
+    subject(:get_transaction) do
+      service.get_transaction(transaction_id: 1234)
     end
 
     let(:ssn) { 196_309_125_422 }
@@ -81,24 +81,17 @@ RSpec.describe Scrive::EID do
       JSON.parse(File.read('spec/fixtures/files/get_transaction_response.json'))
     end
 
-    it 'makes a request to the uri' do
-      request
-      verify_transaction
-
-      expect(request).to have_been_requested
-    end
-
-    context 'when status is complete' do
+    context 'when status is completed' do
       before { request }
 
-      context 'when ssn matches' do
-        it { is_expected.to be true }
+      it 'makes a request to the uri' do
+        get_transaction
+
+        expect(request).to have_been_requested
       end
 
-      context 'when ssn does not match' do
-        let(:ssn) { '12344321' }
-
-        it { is_expected.to be false }
+      it 'returns transaction response' do
+        expect(get_transaction).to eq(http_response)
       end
     end
 
@@ -109,7 +102,7 @@ RSpec.describe Scrive::EID do
       end
 
       it 'raises not completed error' do
-        expect { verify_transaction }
+        expect { get_transaction }
           .to raise_error(described_class::TransactionNotCompletedError)
       end
     end
