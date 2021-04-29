@@ -15,10 +15,10 @@ module Scrive
 
     attr_reader :token, :base_uri, :debug
 
-    def initialize(base_uri:, token: nil, debug: false)
-      @token = token
-      @base_uri = base_uri
-      @debug = debug
+    def initialize
+      @token = Scrive.configuration.token
+      @base_uri = Scrive.configuration.base_uri
+      @debug = Scrive.configuration.debug
     end
 
     def new_transaction(redirect_url:)

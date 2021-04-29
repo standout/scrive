@@ -3,10 +3,17 @@
 require 'json'
 
 RSpec.describe Scrive::EID do
-  let(:service) { described_class.new(token: token, base_uri: base_uri) }
+  let(:service) { described_class.new }
   let(:http_request_headers) { { 'Authorization' => "Bearer #{token}" } }
   let(:token) { 'valid_token' }
   let(:base_uri) { 'https://testbed-eid.scrive.com/api/v1' }
+
+  before do
+    Scrive.configure do |config|
+      config.token = token
+      config.base_uri = base_uri
+    end
+  end
 
   describe '#new_transaction' do
     subject(:new_transaction) do
